@@ -10,7 +10,15 @@ module Dicel
     end
 
     def add_dice(sides, multiplier=1)
-      @dice << Dicel::Die.new(sides, multiplier) unless multiplier == 0
+      return if multiplier == 0
+      index = @dice.find_index { |die| die.sides == sides }
+      if index
+        die = @dice[index]
+        @dice[index] = Dicel::Die.new(sides, die.multiplier + multiplier)
+      else
+        @dice << Dicel::Die.new(sides, multiplier)
+      end
+      self
     end
   end
 end

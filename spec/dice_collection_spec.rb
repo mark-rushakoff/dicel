@@ -5,6 +5,10 @@ describe Dicel::DiceCollection do
   its(:offset) { should == 0 }
 
   describe '#add_dice' do
+    it 'returns self' do
+      subject.add_dice(6).should equal(subject)
+    end
+
     it 'adds a die with the given number of sides and a default multiplier of 1' do
       subject.add_dice(6)
       subject.dice.length.should == 1
@@ -19,6 +23,15 @@ describe Dicel::DiceCollection do
       die = subject.dice.first
       die.sides.should == 6
       die.multiplier.should == 10
+    end
+
+    it 'adding same-sided dice multiple times groups them together' do
+      subject.add_dice(6)
+      subject.add_dice(6)
+      subject.dice.length.should == 1
+      die = subject.dice.first
+      die.sides.should == 6
+      die.multiplier.should == 2
     end
 
     it 'does not add dice when the multiplier is zero' do
