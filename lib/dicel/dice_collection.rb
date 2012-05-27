@@ -20,5 +20,9 @@ module Dicel
       end
       self
     end
+
+    def roll
+      @dice.map(&:roll).inject(offset, &:+)
+    end
   end
 end
