@@ -1,4 +1,4 @@
 require 'rspec'
-require 'dicel/version'
+require 'dicel'
 
-include Dicel
+#include Dicel
