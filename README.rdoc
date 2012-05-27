@@ -1,0 +1,27 @@
+= dicel
+
+* {Homepage}[https://github.com/mark-rushakoff/dicel#readme]
+* {Issues}[https://github.com/mark-rushakoff/dicel/issues]
+* {Documentation}[http://rubydoc.info/gems/dicel/frames]
+
+== Description
+
+Dicel is a DSL for rolling dice in Ruby.
+
+== Features
+
+== Examples
+
+  require 'dicel'
+
+== Requirements
+
+== Install
+
+  $ gem install dicel
+
+== Copyright
+
+Copyright (c) 2012 Mark Rushakoff
+
+Available under the MIT license.
