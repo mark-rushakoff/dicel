@@ -16,6 +16,10 @@ module Dicel
       (Dicel::Die.prng.rand(@sides) + 1) * @multiplier
     end
 
+    def ==(other)
+      @sides == other.sides && @multiplier == other.multiplier
+    end
+
     def to_s
       "#{multiplier}d#{sides}"
     end

@@ -9,6 +9,13 @@ describe 'Dicel::Die' do
     Dicel::Die.new(6, -2).to_s.should == '-2d6'
   end
 
+  it 'should compare sides and multiplier for == operator' do
+    Dicel::Die.new(6).should == Dicel::Die.new(6)
+    Dicel::Die.new(6).should_not == Dicel::Die.new(7)
+    Dicel::Die.new(6, 2).should == Dicel::Die.new(6, 2)
+    Dicel::Die.new(6, 2).should_not == Dicel::Die.new(6, 3)
+  end
+
   it 'raises an exception for sides <= 0' do
     expect { Dicel::Die.new(0) }.to raise_error(ArgumentError)
     expect { Dicel::Die.new(-5) }.to raise_error(ArgumentError)
