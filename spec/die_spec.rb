@@ -3,15 +3,15 @@ require 'spec_helper'
 describe 'Dicel::Die' do
   subject { Dicel::Die.new(6) }
   its(:sides) { should == 6 }
+  its(:to_s) { should == '1d6' }
+
+  it 'shows a negative multiplier in to_s' do
+    Dicel::Die.new(6, -2).to_s.should == '-2d6'
+  end
 
   it 'raises an exception for sides <= 0' do
     expect { Dicel::Die.new(0) }.to raise_error(ArgumentError)
     expect { Dicel::Die.new(-5) }.to raise_error(ArgumentError)
-  end
-
-  it 'raises an exception for multiplier < 0' do
-    expect { Dicel::Die.new(3, 0) }.not_to raise_error(ArgumentError)
-    expect { Dicel::Die.new(3, -1) }.to raise_error(ArgumentError)
   end
 
   describe 'multiplier argument' do

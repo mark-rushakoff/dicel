@@ -21,8 +21,46 @@ module Dicel
       self
     end
 
+    def add_offset(offset)
+      @offset += offset
+      self
+    end
+
     def roll
       @dice.map(&:roll).inject(offset, &:+)
+    end
+
+    def to_s
+      dice = @dice.reject { |die| die.multiplier == 0 }
+      if dice.empty?
+        offset.to_s
+      else
+        on_first = true
+        dice.map { |die|
+          text = format_die(die)
+          if on_first
+            on_first = false
+            text.gsub!(/^.../, '')
+          end
+
+          text
+        }.join('') + offset_to_s
+      end
+    end
+
+    private
+    def format_die(die)
+      die.to_s.gsub(/^(-)/, ' - ').gsub(/(?:^)(\d)/, ' + \1')
+    end
+
+    def offset_to_s
+      if @offset == 0
+        ''
+      elsif @offset < 0
+        " - #{-offset}"
+      else
+        " + #{offset}"
+      end
     end
   end
 end

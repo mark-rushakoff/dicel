@@ -3,10 +3,9 @@ module Dicel
     attr_reader :sides, :multiplier
 
     def initialize(sides, multiplier=1)
-      @sides = sides
       raise ArgumentError, 'sides must be greater than 0' if sides <= 0
+      @sides = sides
       @multiplier = multiplier
-      raise ArgumentError, 'multiplier must be greater than or equal to 0' if multiplier < 0
     end
 
     def self.prng
@@ -15,6 +14,10 @@ module Dicel
 
     def roll
       (Dicel::Die.prng.rand(@sides) + 1) * @multiplier
+    end
+
+    def to_s
+      "#{multiplier}d#{sides}"
     end
   end
 end
