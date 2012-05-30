@@ -65,6 +65,15 @@ describe Dicel::DiceCollection do
 
       subject.roll.should == 5 + 8 + 1
     end
+
+    it 'should call #roll the number of times as the multiplier' do
+      subject.offset = 5
+      subject.add_dice(2, 2).add_dice(3, 4)
+      subject.dice[0].should_receive(:roll).twice.and_return(8, 3)
+      subject.dice[1].should_receive(:roll).exactly(4).times.and_return(1, 2, 3, 4)
+
+      subject.roll.should == 5 + 8 + 3 + 1 + 2 + 3 + 4
+    end
   end
 
   describe '#to_s' do

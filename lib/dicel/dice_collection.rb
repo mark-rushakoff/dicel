@@ -27,7 +27,14 @@ module Dicel
     end
 
     def roll
-      @dice.map(&:roll).inject(offset, &:+)
+      sum = offset
+      @dice.each do |die|
+        die.multiplier.times do
+          sum += die.roll
+        end
+      end
+
+      sum
     end
 
     def +(other)
