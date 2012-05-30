@@ -114,5 +114,9 @@ describe Dicel::DiceCollection do
     it 'handles a die object' do
       (subject.add_dice(6, 2).add_offset(1) + Dicel::Die.new(6, 3)).to_s.should == '5d6 + 1'
     end
+
+    it 'handles a number for offset' do
+      (subject.add_dice(6, 2) + 1).to_s.should == '2d6 + 1'
+    end
   end
 end

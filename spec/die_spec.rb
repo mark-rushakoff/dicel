@@ -57,5 +57,9 @@ describe 'Dicel::Die' do
     it 'accepts another die object' do
       (Dicel::Die.new(6, 3) + Dicel::Die.new(4, 2)).to_s.should == '2d4 + 3d6'
     end
+
+    it 'accepts a number for offset' do
+      (Dicel::Die.new(6, 3) + 1).to_s.should == '3d6 + 1'
+    end
   end
 end

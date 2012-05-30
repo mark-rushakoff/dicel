@@ -30,13 +30,15 @@ module Dicel
       @dice.map(&:roll).inject(offset, &:+)
     end
 
-    def +(other_collection)
+    def +(other)
       sum = DiceCollection.new
-      [self, other_collection].each do |collection|
-        collection.dice.each do |die|
-          sum.add_dice(die.sides, die.multiplier)
+      [self, other].each do |collectionish|
+        if collectionish.respond_to? :dice
+          collectionish.dice.each do |die|
+            sum.add_dice(die.sides, die.multiplier)
+          end
         end
-        sum.add_offset(collection.offset)
+        sum.add_offset(collectionish.respond_to?(:offset) ? collectionish.offset : collectionish)
       end
 
       sum
