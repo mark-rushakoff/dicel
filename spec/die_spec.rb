@@ -29,21 +29,23 @@ describe 'Dicel::Die' do
   end
 
   describe '#roll' do
-    def stub_roll(expected_sides, return_val)
+    def stub_roll(expected_sides, times, *return_vals)
       fake_prng = double()
-      fake_prng.should_receive(:rand).with(expected_sides).and_return(return_val - 1)
-      fake_prng
+      fake_prng.should_receive(:rand).
+        with(expected_sides).
+        exactly(times).times.
+        and_return(*(return_vals.map(&:pred)))
       Dicel::Die.stub(:prng).and_return(fake_prng)
     end
 
     it 'returns a number between 1 and the number of sides' do
-      stub_roll(6, 5)
+      stub_roll(6, 1, 5)
       subject.roll.should == 5
     end
 
     it 'applies the multiplier' do
-      stub_roll(6, 4)
-      Dicel::Die.new(6, 3).roll.should == 12
+      stub_roll(6, 3, 4, 1, 2)
+      Dicel::Die.new(6, 3).roll.should == 4 + 1 + 2
     end
   end
 

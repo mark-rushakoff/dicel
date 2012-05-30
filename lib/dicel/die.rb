@@ -13,7 +13,11 @@ module Dicel
     end
 
     def roll
-      (::Dicel::Die.prng.rand(@sides) + 1) * multiplier
+      sum = 0
+      multiplier.times do
+        sum += (::Dicel::Die.prng.rand(@sides) + 1)
+      end
+      sum
     end
 
     def dice
