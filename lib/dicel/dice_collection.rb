@@ -30,8 +30,20 @@ module Dicel
       @dice.map(&:roll).inject(offset, &:+)
     end
 
+    def +(other_collection)
+      sum = DiceCollection.new
+      [self, other_collection].each do |collection|
+        collection.dice.each do |die|
+          sum.add_dice(die.sides, die.multiplier)
+        end
+        sum.add_offset(collection.offset)
+      end
+
+      sum
+    end
+
     def to_s
-      dice = @dice.reject { |die| die.multiplier == 0 }
+      dice = @dice.reject { |die| die.multiplier == 0 }.sort_by { |die| die.sides }
       if dice.empty?
         offset.to_s
       else

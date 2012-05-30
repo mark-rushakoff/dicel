@@ -88,7 +88,8 @@ describe Dicel::DiceCollection do
       end
 
       it 'shows two dice as XdY + XdY format, in ascending order of sides' do
-        subject.add_dice(6).add_dice(8, 2).to_s.should == '1d6 + 2d8'
+        Dicel::DiceCollection.new.add_dice(6).add_dice(8, 2).to_s.should == '1d6 + 2d8'
+        Dicel::DiceCollection.new.add_dice(8, 2).add_dice(6).to_s.should == '1d6 + 2d8'
       end
     end
 
@@ -100,6 +101,14 @@ describe Dicel::DiceCollection do
       it 'shows one die as XdY - offset for a negative offset' do
         subject.add_dice(6).add_dice(8, 2).add_offset(-2).to_s.should == '1d6 + 2d8 - 2'
       end
+    end
+  end
+
+  describe '#+' do
+    it 'constructs a new DiceCollection' do
+      (Dicel::DiceCollection.new.add_dice(6).add_dice(12, 2).add_offset(3) +
+          Dicel::DiceCollection.new.add_dice(4, 3).add_dice(10).add_offset(-1)).to_s.should ==
+          '3d4 + 1d6 + 1d10 + 2d12 + 2'
     end
   end
 end
