@@ -110,5 +110,9 @@ describe Dicel::DiceCollection do
           Dicel::DiceCollection.new.add_dice(4, 3).add_dice(10).add_offset(-1)).to_s.should ==
           '3d4 + 1d6 + 1d10 + 2d12 + 2'
     end
+
+    it 'handles a die object' do
+      (subject.add_dice(6, 2).add_offset(1) + Dicel::Die.new(6, 3)).to_s.should == '5d6 + 1'
+    end
   end
 end

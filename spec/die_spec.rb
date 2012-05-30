@@ -4,6 +4,7 @@ describe 'Dicel::Die' do
   subject { Dicel::Die.new(6) }
   its(:sides) { should == 6 }
   its(:to_s) { should == '1d6' }
+  its(:offset) { should == 0 }
 
   it 'shows a negative multiplier in to_s' do
     Dicel::Die.new(6, -2).to_s.should == '-2d6'
@@ -43,6 +44,18 @@ describe 'Dicel::Die' do
     it 'applies the multiplier' do
       stub_roll(6, 4)
       Dicel::Die.new(6, 3).roll.should == 12
+    end
+  end
+
+  describe '#dice' do
+    it 'yields itself in an array' do
+      Dicel::Die.new(6, 3).dice.should == [Dicel::Die.new(6,3)]
+    end
+  end
+
+  describe '#+' do
+    it 'accepts another die object' do
+      (Dicel::Die.new(6, 3) + Dicel::Die.new(4, 2)).to_s.should == '2d4 + 3d6'
     end
   end
 end
